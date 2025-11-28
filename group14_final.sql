@@ -18,8 +18,8 @@ dep_name varchar(255) UNIQUE
 );
 
 create table Salary(
-salary_id int DEFAULT 35000, -- roughly calculated annual sal. on min. wage
-quantity decimal,
+salary_id int PRIMARY KEY,
+quantity decimal  DEFAULT 35000, -- roughly calculated annual sal. on min. wage
 pay_period varchar(255)
 );
 
@@ -61,5 +61,6 @@ quantity decimal,
 pay_id int,
 FOREIGN KEY (pay_id) REFERENCES payslip(pay_id)
 );
+
 
 
