@@ -1,8 +1,10 @@
+DROP DATABASE IF EXSITS group14_finalssgmt;
+
 -- create the database
+create database group14_finalassgmt; 
 using group14_finalassgmt;
 
 --ifdrop for convenience
-
 
 -- create tables 
 create table Bank(
@@ -21,14 +23,14 @@ quantity decimal,
 pay_period varchar(255)
 );
 
-create table Position(
+create table Position_( -- position seems to be reserved
 pos_id int PRIMARY KEY,
 dep_id int,
 salary_id int,
 pos_hrs_vacation int,
 pos_hrs_expected int,
-FOREIGN KEY dep_id REFERENCES department(dep_id),
-FOREIGN KEY salary_id REFERENCES salary(salary_id) 
+FOREIGN KEY (dep_id) REFERENCES department(dep_id),
+FOREIGN KEY (salary_id) REFERENCES salary(salary_id) 
 );
 
 create table Employee(
@@ -39,8 +41,8 @@ emp_accNum int,
 emp_name varchar(255),
 emp_email varchar(255),
 emp_phone varchar(20),
-FOREIGN KEY pos_id REFERENCES position(pos_id),
-FOREIGN KEY bank_id REFERENCES bank(bank_id)
+FOREIGN KEY (pos_id) REFERENCES position_(pos_id),
+FOREIGN KEY (bank_id) REFERENCES bank(bank_id)
 );
 
 create table Payslip(
@@ -49,7 +51,7 @@ emp_id int,
 pay_date DATE,
 gross_pay decimal,
 net_pay decimal,
-FOREIGN KEY emp_id REFERENCES employee(emp_id)
+FOREIGN KEY (emp_id) REFERENCES employee(emp_id)
 );
 
 Pay_Adjustments(
@@ -57,5 +59,6 @@ adjustment_id int PRIMARY KEY,
 description varchar(255),
 quantity decimal,
 pay_id int,
-FOREIGN KEY pay_id REFERENCES payslip(pay_id)
+FOREIGN KEY (pay_id) REFERENCES payslip(pay_id)
 );
+
