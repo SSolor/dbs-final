@@ -2,7 +2,7 @@ DROP DATABASE IF EXSITS group14_finalssgmt;
 
 -- create the database
 create database group14_finalassgmt; 
-using group14_finalassgmt;
+use group14_finalassgmt;
 
 --ifdrop for convenience
 
@@ -61,4 +61,5 @@ quantity decimal,
 pay_id int,
 FOREIGN KEY (pay_id) REFERENCES payslip(pay_id)
 );
+
 
