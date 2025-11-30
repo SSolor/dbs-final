@@ -107,14 +107,54 @@ INSERT INTO Pay_Adjustments VALUES (4, 'Health Insurance', -200, 4);
 INSERT INTO Pay_Adjustments VALUES (5, 'Performance Bonus', 600, 5);
 INSERT INTO Pay_Adjustments VALUES (6, 'Late Penalty', -100, 6);
 
+-- Disable safe update mode for this session
+SET SQL_SAFE_UPDATES = 0;
 
 -- Update queries (2) --
--- one update must use subqueries
+ UPDATE Employee -- no subquery -- Changes phone number of an employee named Alice Smith
+	SET emp_phone = '555-9999'
+	WHERE emp_name LIKE '%Alice Smith%';
+
+-- Update query using subqueries:
+-- Give a salary raise to those in the endineering department
+UPDATE Salary
+SET quantity = quantity * 1.10 -- Update salary quantity
+WHERE salary_id IN (SELECT salary_id FROM Position_ -- Subquery to nav from salary, through pos
+    WHERE dep_id IN (SELECT dep_id FROM Department    -- to department
+		WHERE dep_name LIKE '%Engineering%'));       -- verify to only chamge salary if Engineering is the department name
+
 
 -- Delete Queries (2) --
--- one delete must use subqueries
+-- Delete using subqueries
+-- Delete Pay adjustment for all HR employees (does not adjust gross pay, just what is on record for adjustments)
+DELETE FROM Pay_Adjustments  -- Delete Pay adjustment if below subquery is true
+WHERE pay_id IN (SELECT pay_id FROM Payslip -- Subquery 
+	WHERE emp_id IN (SELECT emp_id FROM Employee  -- navigating 
+        WHERE pos_id IN (SELECT pos_id FROM Position_  -- through to
+            WHERE dep_id = ( SELECT dep_id FROM Department  -- Department
+				WHERE dep_name LIKE '%HR%'))));   -- Checking if Department name is HR
+
+DELETE FROM Payslip -- delete payslip
+WHERE pay_id = 2;   -- with pay_id: 2 
+
+-- re-enable safe update mode for this session
+SET SQL_SAFE_UPDATES = 1;
 
 -- View Tables After Update and Delete -- 
+Select * from Employee;
+Select * from Department;
+Select * from Position_;
+Select * from Salary;
+Select * from Bank;
+Select * from Payslip;
+Select * from Pay_Adjustments;
 
-
+-- Data Retrieval (SELECT Queries) --
+-- 1. A query that performs joins across at least three tables.  
+	-- Use Employee, Position, and Department
+    
+-- 2. A query utilizing aggregate functions along with a HAVING clause.
+-- 3. A query incorporating nested subqueries.
+-- 4. A query that uses UNION, INTERSECT, or MINUS.  
+-- 5. A query that combines joins with aggregate functions or subqueries with aggregate functions.  
 
