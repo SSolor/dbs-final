@@ -162,12 +162,23 @@ Select pos_name, pos_hrs_vacation FROM Position_ -- position name and vacation h
 		AVG(pos_hrs_vacation) FROM Position_); -- are greater than average
 
 -- 3. A query incorporating nested subqueries.  
-
+	-- selecting all employees in a specific department
+select * from employee where pos_id in( -- link to position
+	select pos_id from position_ where dep_id in( -- link to department
+		select dep_id from department where dep_name like '%finance%' -- get desired department
+	)
+);
 
 -- 4. A query that uses UNION, INTERSECT, or MINUS.
-  
-  
+select pos_name, pos_hrs_expected, pos_hrs_vacation from position_ -- standard select
+	left join employee on position_.pos_id = employee.pos_id 
+	where employee.emp_id is null; -- using left join + is null in place of minus, which is not supported
+-- this prints any empty/available positions. with the current inserts, there are none
+
 -- 5. A query that combines joins with aggregate functions or subqueries with aggregate functions.  
-
-
+select * from employee where pos_id in( -- link to position
+	select pos_id from position_ where salary_id in( -- link to salary
+		select salary_id from salary where quantity > (select avg(quantity) from salary) -- using aggregate here
+	) -- this is comparing against the average salary offered, not the average of what they're making
+);
 
