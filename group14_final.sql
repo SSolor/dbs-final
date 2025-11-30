@@ -151,10 +151,23 @@ Select * from Pay_Adjustments;
 
 -- Data Retrieval (SELECT Queries) --
 -- 1. A query that performs joins across at least three tables.  
-	-- Use Employee, Position, and Department
+	-- Use Employee, Position, and Department and display their names
+Select e.emp_name, p.pos_name, d.dep_name From Employee e
+	JOIN Position_ p ON  p.pos_id=e.pos_id -- join position_.name where pos_id matches with employee.pos_id
+    JOIN Department d ON d.dep_id=p.dep_id; -- join department.name where dep_id matches with position_.dep_id
     
 -- 2. A query utilizing aggregate functions along with a HAVING clause.
--- 3. A query incorporating nested subqueries.
--- 4. A query that uses UNION, INTERSECT, or MINUS.  
+Select pos_name, pos_hrs_vacation FROM Position_ -- position name and vacation hours, 
+	HAVING pos_hrs_vacation > (SELECT     		-- where available vacation Hours 
+		AVG(pos_hrs_vacation) FROM Position_); -- are greater than average
+
+-- 3. A query incorporating nested subqueries.  
+
+
+-- 4. A query that uses UNION, INTERSECT, or MINUS.
+  
+  
 -- 5. A query that combines joins with aggregate functions or subqueries with aggregate functions.  
+
+
 
