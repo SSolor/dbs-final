@@ -1,9 +1,9 @@
 -- ifdrop for convenience
-DROP DATABASE IF EXISTS group14_finalassgmt;
+DROP DATABASE IF EXISTS group11_finalassgmt;
 
 -- create the database
-create database group14_finalassgmt;
-use group14_finalassgmt;
+create database group11_finalassgmt;
+use group11_finalassgmt;
 
 -- create tables --
 create table Bank(
@@ -181,4 +181,5 @@ select * from employee where pos_id in( -- link to position
 		select salary_id from salary where quantity > (select avg(quantity) from salary) -- using aggregate here
 	) -- this is comparing against the average salary offered, not the average of what they're making
 );
+
 
